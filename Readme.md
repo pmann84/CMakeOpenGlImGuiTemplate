@@ -1,8 +1,32 @@
 # Prerequisites
-- Conan
+- CMake
+- spdlog
+- glm
+- glad
+- glfw
+- ImGui
 
-Install the conan profiles
+# Clone
+For a new clone
 ```
-conan config install .\conan\profiles\clion-vs2022-release -tf profiles
-conan config install .\conan\profiles\clion-vs2022-debug -tf profiles
+git clone --recursive https://github.com/pmann84/CMakeOpenGlImGuiTemplate.git
+```
+For an already cloned repo
+```
+git clone https://github.com/pmann84/CMakeOpenGlImGuiTemplate.git
+cd CMakeOpenGlImGuiTemplate
+git submodule update --init --recursive
+```
+# Configure and Build
+First do an out of source build by configuring the build scripts
+```
+cd CMakeOpenGlImGuiTemplate
+mkdir out
+cd out
+cmake ..
+```
+Then build
+```
+cd out 
+cmake --build . --config Debug
 ```
