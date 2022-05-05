@@ -26,7 +26,16 @@ public:
     void run();
 
     virtual void on_update() = 0;
-private:
+//    virtual void on_error(int error, const char* description) = 0;
+    virtual void on_key_press(int key, int scancode, int action, int mods) {}
+    virtual void on_window_close() {}
+    virtual void on_window_resize(int width, int height) {}
+    virtual void on_char_press(unsigned int keycode) {}
+    virtual void on_mouse_button(int button, int action, int mods) {}
+    virtual void on_scroll(double xOffset, double yOffset) {}
+    virtual void on_cursor_pos_changed(double xPos, double yPos) {}
+
+protected:
     application_data m_props;
     GLFWwindow* m_window;
 };

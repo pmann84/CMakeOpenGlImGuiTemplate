@@ -1,5 +1,10 @@
 #include "application.hpp"
 
+static void error_callback(int error, const char* description)
+{
+    logging::error("GLFW Error ({0}): {1}", error, description);
+}
+
 application::application(application_data application_props) : m_props(application_props)
 {
     logging::init(spdlog::level::debug);
@@ -11,7 +16,7 @@ application::application(application_data application_props) : m_props(applicati
         return;
     }
 
-//    glfwSetErrorCallback(error_callback);
+    glfwSetErrorCallback(error_callback);
 
     m_window = glfwCreateWindow(m_props.width, m_props.height, m_props.title.c_str(), NULL, NULL);
     if (!m_window)
@@ -21,8 +26,50 @@ application::application(application_data application_props) : m_props(applicati
         glfwTerminate();
         return;
     }
-//    glfwSetKeyCallback(m_window,key_callback);
-//    glfwSetWindowCloseCallback(m_window,window_close_callback);
+
+    glfwSetWindowUserPointer(m_window, this);
+
+    glfwSetKeyCallback(m_window, [](GLFWwindow* window, int key, int scancode, int action, int mods) {
+        application& app = *(application*)glfwGetWindowUserPointer(window);
+        // TODO: Consider converting this into something more sane?
+        app.on_key_press(key, scancode, action, mods);
+    });
+
+    glfwSetWindowCloseCallback(m_window, [](GLFWwindow* window){
+        application& app = *(application*)glfwGetWindowUserPointer(window);
+        app.on_window_close();
+    });
+
+    glfwSetWindowSizeCallback(m_window, [](GLFWwindow* window, int width, int height){
+        application& app = *(application*)glfwGetWindowUserPointer(window);
+        app.m_props.width = width;
+        app.m_props.height = height;
+        app.on_window_resize(width, height);
+    });
+
+    glfwSetCharCallback(m_window, [](GLFWwindow* window, unsigned int keycode)
+    {
+        application& app = *(application*)glfwGetWindowUserPointer(window);
+        app.on_char_press(keycode);
+    });
+
+    glfwSetMouseButtonCallback(m_window, [](GLFWwindow* window, int button, int action, int mods)
+    {
+        application& app = *(application*)glfwGetWindowUserPointer(window);
+        app.on_mouse_button(button, action, mods);
+    });
+
+    glfwSetScrollCallback(m_window, [](GLFWwindow* window, double xOffset, double yOffset)
+    {
+        application& app = *(application*)glfwGetWindowUserPointer(window);
+        app.on_scroll(xOffset, yOffset);
+    });
+
+    glfwSetCursorPosCallback(m_window, [](GLFWwindow* window, double xPos, double yPos)
+    {
+        application& app = *(application*)glfwGetWindowUserPointer(window);
+        app.on_cursor_pos_changed(xPos, yPos);
+    });
 
     glfwMakeContextCurrent(m_window);
     gladLoadGLLoader((GLADloadproc)glfwGetProcAddress);
