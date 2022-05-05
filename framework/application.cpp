@@ -1,5 +1,9 @@
 #include "application.hpp"
 
+#include "imgui.h"
+#include "imgui_impl_glfw.h"
+#include "imgui_impl_opengl3.h"
+
 static void error_callback(int error, const char* description)
 {
     logging::error("GLFW Error ({0}): {1}", error, description);
@@ -74,24 +78,58 @@ application::application(application_data application_props) : m_props(applicati
     glfwMakeContextCurrent(m_window);
     gladLoadGLLoader((GLADloadproc)glfwGetProcAddress);
     glfwSwapInterval(1);
+
+    // Setup Dear ImGui context
+    IMGUI_CHECKVERSION();
+    ImGui::CreateContext();
+    ImGuiIO& io = ImGui::GetIO(); (void)io;
+    //io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;     // Enable Keyboard Controls
+    //io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;      // Enable Gamepad Controls
+
+    // Setup Dear ImGui style
+    ImGui::StyleColorsDark();
+    //ImGui::StyleColorsClassic();
+
+    // Setup Platform/Renderer backends
+    const char* glsl_version = "#version 130";
+    ImGui_ImplGlfw_InitForOpenGL(m_window, true);
+    ImGui_ImplOpenGL3_Init(glsl_version);
 }
 
 void application::run()
 {
     while (!glfwWindowShouldClose(m_window))
     {
+        // Swap buffer and poll for events
+        glfwPollEvents();
+
+        // Start the Dear ImGui frame
+        ImGui_ImplOpenGL3_NewFrame();
+        ImGui_ImplGlfw_NewFrame();
+        ImGui::NewFrame();
+
+        bool show_demo_window = true;
+        ImGui::ShowDemoWindow(&show_demo_window);
+
         // Code to run every frame
         on_update();
 
-        // Swap buffer and poll for events
+        ImGui::Render();
+        glClearColor(0.0, 0.0, 0.0, 1.0);
+        glClear(GL_COLOR_BUFFER_BIT);
+        ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
         glfwSwapBuffers(m_window);
-        glfwPollEvents();
     }
 }
 
 application::~application()
 {
     logging::debug("Closing application...");
+
+    ImGui_ImplOpenGL3_Shutdown();
+    ImGui_ImplGlfw_Shutdown();
+    ImGui::DestroyContext();
+
     glfwDestroyWindow(m_window);
     glfwTerminate();
 }

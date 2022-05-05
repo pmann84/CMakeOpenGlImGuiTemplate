@@ -1,5 +1,3 @@
-##### cmake -G "Visual Studio 16 2019" -A x64 ..
-##### cmake -G "Visual Studio 17 2022" -A x64 ..
 cmake_minimum_required(VERSION 3.22)
 
 # Project settings
@@ -14,12 +12,11 @@ project(
 include(cmake/project_defaults.cmake) # Default project settings
 include(cmake/project_dependencies.cmake) # Project dependencies
 
-# TODO:
-# Glad & Glfw
-# imgui
+# App framework and app stub
+add_subdirectory(framework)
+add_subdirectory(app)
 
-add_subdirectory(src)
-
+# Optionally add tests if they are requested
 if(BUILD_TESTS)
     add_subdirectory(tests)
 endif()

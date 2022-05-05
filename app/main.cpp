@@ -1,10 +1,5 @@
 #include "application.hpp"
 
-//static void error_callback(int error, const char* description)
-//{
-//    fprintf(stderr, "Error: %s\n", description);
-//}
-
 class my_app : public application
 {
 public:
@@ -12,14 +7,16 @@ public:
     {
     }
 
+    // This function is run every frame
     void on_update() override
     {
+
     }
 };
 
 int main()
 {
-    application_data props;
+    application_data props { "My Amazing App", 1024, 768  };
     my_app app(props);
     app.run();
 
