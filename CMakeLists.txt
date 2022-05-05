@@ -14,16 +14,16 @@ project(
 include(cmake/project_defaults.cmake) # Default project settings
 include(cmake/project_dependencies.cmake) # Project dependencies
 
-# Setup a test project with gtest dependencies
-#option(PACKAGE_TESTS "Build the tests" OFF)
-#if(PACKAGE_TESTS)
-#    set(CONAN_EXTRA_REQUIRES ${CONAN_EXTRA_REQUIRES} gtest/1.11.0)
-#endif()
+# TODO:
+# Glad & Glfw
+# imgui
 
-#if(PACKAGE_TESTS)
-#    add_subdirectory(tests)
-#endif()
 add_subdirectory(src)
+
+if(BUILD_TESTS)
+    add_subdirectory(tests)
+endif()
+
 
 
 

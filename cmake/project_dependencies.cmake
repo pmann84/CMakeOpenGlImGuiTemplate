@@ -1,6 +1,12 @@
 add_subdirectory(vendor/spdlog)
 add_subdirectory(vendor/glm)
 
+# Setup a test project with gtest dependencies
+option(BUILD_TESTS "Build the tests" OFF)
+if(BUILD_TESTS)
+    add_subdirectory(vendor/googletest)
+endif()
+
 find_package(glm REQUIRED)
 
 #set(GLFW_BUILD_DOCS OFF)

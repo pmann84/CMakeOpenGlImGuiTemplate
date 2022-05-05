@@ -1,6 +1,6 @@
-//#include <gtest/gtest.h>
-//
-//TEST()
-//{
-//
-//}
+#include <gtest/gtest.h>
+
+TEST(Tests, ExampleTest)
+{
+    EXPECT_TRUE(true);
+}

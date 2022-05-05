@@ -23,7 +23,7 @@ First do an out of source build by configuring the build scripts
 cd CMakeOpenGlImGuiTemplate
 mkdir out
 cd out
-cmake ..
+cmake -G "Visual Studio 16 2019" -A x64 -DCMAKE_BUILD_TYPE=Release -DBUILD_TESTS=ON ..
 ```
 Then build
 ```
