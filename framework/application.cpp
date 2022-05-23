@@ -111,12 +111,13 @@ void application::run()
         bool show_demo_window = true;
         ImGui::ShowDemoWindow(&show_demo_window);
 
+        glClearColor(0.0, 0.0, 0.0, 1.0);
+        glClear(GL_COLOR_BUFFER_BIT);
+		
         // Code to run every frame
         on_update();
 
         ImGui::Render();
-        glClearColor(0.0, 0.0, 0.0, 1.0);
-        glClear(GL_COLOR_BUFFER_BIT);
         ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
         glfwSwapBuffers(m_window);
     }
