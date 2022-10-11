@@ -8,7 +8,12 @@ public:
     }
 
     // This function is run every frame
-    void on_update() override
+    void on_update(float ts) override
+    {
+
+    }
+
+    void on_ui_render() override
     {
 
     }

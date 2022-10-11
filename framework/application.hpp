@@ -25,7 +25,9 @@ public:
     ~application();
     void run();
 
-    virtual void on_update() = 0;
+    virtual void on_update(float ts) = 0;
+    virtual void on_ui_render() = 0;
+
 //    virtual void on_error(int error, const char* description) = 0;
     virtual void on_key_press(int key, int scancode, int action, int mods) {}
     virtual void on_window_close() {}
@@ -38,6 +40,10 @@ public:
 protected:
     application_data m_props;
     GLFWwindow* m_window;
+
+    float m_time_step = 0.0f;
+    float m_frame_time = 0.0f;
+    float m_last_frame_time = 0.0f;
 };
 
 

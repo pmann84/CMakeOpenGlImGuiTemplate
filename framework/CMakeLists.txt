@@ -7,12 +7,12 @@ target_sources(${FRAMEWORK_PROJECT_NAME}
         PRIVATE application.cpp
         ../bindings/imgui_impl_glfw.cpp
         ../bindings/imgui_impl_opengl3.cpp
-        PUBLIC application.hpp logging.hpp
+        PUBLIC application.hpp logging.hpp timer.hpp
         ../bindings/imgui_impl_glfw.h
         ../bindings/imgui_impl_opengl3.h)
 
 target_link_libraries(${FRAMEWORK_PROJECT_NAME}
-        PRIVATE spdlog::spdlog
+        PUBLIC spdlog::spdlog
         PRIVATE glm
         PRIVATE glad
         PRIVATE glfw

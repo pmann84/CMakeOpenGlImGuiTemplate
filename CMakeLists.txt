@@ -5,7 +5,7 @@ project(
         OpenGLImGuiTemplate
         VERSION 1.0.0
         DESCRIPTION ""
-        LANGUAGES CXX
+        LANGUAGES CXX C
 )
 
 # CMake scripts

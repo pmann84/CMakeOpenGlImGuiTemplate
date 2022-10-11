@@ -17,6 +17,11 @@ git clone https://github.com/pmann84/CMakeOpenGlImGuiTemplate.git
 cd CMakeOpenGlImGuiTemplate
 git submodule update --init --recursive
 ```
+# Updating if the submodules have changes
+```
+git submodule update --remote
+```
+
 # Configure and Build
 First do an out of source build by configuring the build scripts
 ```
