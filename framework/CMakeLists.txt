@@ -4,10 +4,10 @@ message(STATUS "FRAMEWORK_PROJECT_NAME: ${FRAMEWORK_PROJECT_NAME}")
 add_library(${FRAMEWORK_PROJECT_NAME})
 
 target_sources(${FRAMEWORK_PROJECT_NAME}
-        PRIVATE application.cpp
+        PRIVATE application.cpp image.cpp
         ../bindings/imgui_impl_glfw.cpp
         ../bindings/imgui_impl_opengl3.cpp
-        PUBLIC application.hpp logging.hpp timer.hpp
+        PUBLIC application.hpp logging.hpp timer.hpp image.hpp
         ../bindings/imgui_impl_glfw.h
         ../bindings/imgui_impl_opengl3.h)
 
